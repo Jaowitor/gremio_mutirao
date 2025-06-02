@@ -1,0 +1,43 @@
+.custom-input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.custom-input {
+    width: 100%;
+    padding: 18px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.custom-input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.input-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    pointer-events: none;
+}
+
+.input-icon.left {
+    left: 10px;
+}
+
+.input-icon.right {
+    right: 10px;
+}
+
+.custom-input.has-left-icon {
+    padding-left: 30px;
+}
+
+.custom-input.has-right-icon {
+    padding-right: 30px;
+}

@@ -1,0 +1,65 @@
+body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; }
+.drawer {
+    width: 220px;
+    background: #007BFF;
+    color: #fff;
+    height: 100vh;
+    position: fixed;
+    left: 0; top: 0;
+    padding: 32px 0 0 0;
+    box-shadow: 2px 0 8px #0002;
+}
+.drawer h2 { text-align: center; margin-bottom: 32px; }
+.drawer ul { list-style: none; padding: 0; }
+.drawer li { padding: 16px 32px; cursor: pointer; }
+.drawer li:hover { background: #0056b3; }
+.main-content { margin-left: 220px; padding: 32px; }
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+.total-jogadores {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #0001;
+    padding: 18px 32px;
+    font-size: 1.3em;
+    color: #007BFF;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.modulos { display: flex; gap: 24px; margin-bottom: 32px; }
+.modulo-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #0001;
+    padding: 32px 24px;
+    min-width: 180px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+.modulo-card:hover { transform: translateY(-4px) scale(1.04); background: #f0f8ff; }
+.modulo-card i { font-size: 2em; color: #007BFF; margin-bottom: 12px; }
+.avisos-dashboard {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #0001;
+    padding: 24px;
+}
+.aviso {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 18px;
+    border-left: 5px solid #007BFF;
+    padding-left: 12px;
+}
+.aviso:last-child { margin-bottom: 0; }
+.aviso-img {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid #007BFF;
+}
+.aviso-texto { font-size: 1.1em; }
+.aviso-jogador { font-weight: bold; color: #007BFF; }

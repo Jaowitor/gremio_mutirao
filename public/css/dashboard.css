@@ -1,19 +1,5 @@
-body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; }
-.drawer {
-    width: 220px;
-    background: #007BFF;
-    color: #fff;
-    height: 100vh;
-    position: fixed;
-    left: 0; top: 0;
-    padding: 32px 0 0 0;
-    box-shadow: 2px 0 8px #0002;
-}
-.drawer h2 { text-align: center; margin-bottom: 32px; }
-.drawer ul { list-style: none; padding: 0; }
-.drawer li { padding: 16px 32px; cursor: pointer; }
-.drawer li:hover { background: #0056b3; }
-.main-content { margin-left: 220px; padding: 32px; }
+
+
 .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
 .total-jogadores {
     background: #fff;
@@ -24,7 +10,7 @@ body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; }
     color: #007BFF;
     font-weight: bold;
     display: flex;
-    align-items: center;
+    align-items: start;
     gap: 12px;
 }
 .modulos { display: flex; gap: 24px; margin-bottom: 32px; }

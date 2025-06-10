@@ -1,0 +1,10 @@
+.form-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"] {
+    background-color: #fafafa !important;
+}

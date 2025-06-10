@@ -1,0 +1,16 @@
+        .breadcrumb-wrapper {
+        width: 100%;
+        text-align: center;
+
+    }
+
+    .breadcrumb a {
+        color: #007BFF;
+        text-decoration: none;
+        margin: 0 5px;
+        
+    }
+
+    .breadcrumb span {
+        font-weight: bold;
+    }

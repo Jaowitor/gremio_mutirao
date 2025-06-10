@@ -1,0 +1,119 @@
+/* Definição de variáveis CSS */
+:root {
+    --primary-color: #007BFF;
+    --secondary-color: white;
+    --tertiary-color: gray;
+    --text-color: #333;
+}
+
+/* Breadcrumb */
+.breadcrumbs-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: var(--secondary-color);
+}
+
+.breadcrumb-wrapper {
+    width: 100%;
+}
+
+.breadcrumb a {
+    color: var(--primary-color);
+    margin: 0 5px;
+}
+
+.breadcrumb span {
+    font-weight: bold;
+}
+
+.drawer {
+    width: 200px;
+    background-color: var(--primary-color);
+    color: #fff;
+    height: 100vh;
+    padding: 32px 20px 0;
+}
+
+/* Estilos dos links dentro do Drawer */
+.drawer-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: 2px;
+    
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Links no Drawer */
+.drawer a,
+.drawer a:link,
+.drawer a:visited,
+.drawer a:hover,
+.drawer a:active {
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+/* Efeito Hover */
+.drawer-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #f1f1f1;
+}
+
+/* Efeito ao clicar */
+.drawer-link:active {
+    background-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+}
+
+/* Estado selecionado */
+.drawer-link.selected {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Botão de Logout */
+.drawer-logout-btn {
+    color: #fff !important;
+    background: transparent;
+    border: none;
+    text-align: left;
+    padding: 12px 16px;
+    font-weight: 400;
+    width: 100%;
+    cursor: pointer;
+}
+
+.skeleton {
+    background-color: #e0e0e0;
+    color: transparent; /* some o texto */
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -150px;
+    height: 100%;
+    width: 150px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Classe geral para aplicar efeito skeleton */
+.loading * {
+    pointer-events: none;      /* impede clicar durante o carregamento */
+}

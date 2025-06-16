@@ -1,0 +1,35 @@
+.card {
+    height: 100%; /* Garante que todos os cards tenham a mesma altura */
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body {
+    flex-grow: 1; /* Faz com que a parte do corpo do card ocupe o espaço necessário */
+    min-height: 120px; /* Define uma altura mínima para padronizar os cards */
+}
+
+.card-body details p {
+    display: -webkit-box;
+    display: box;
+    -webkit-line-clamp: 3; /* Limita a 3 linhas */
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-body details[open] p {
+    display: block; /* Exibe o texto completo ao abrir */
+}
+
+.summary-title {
+    cursor: pointer;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.card-footer {
+    margin-top: auto; /* Faz com que o footer do card fique sempre no final */
+}

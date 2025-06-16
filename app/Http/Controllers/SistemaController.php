@@ -12,6 +12,7 @@ class SistemaController extends Controller {
         $breadcrumbs_list = $this->getBreadcrumbs();
         return view('dashboard', compact('totalJogadores', 'breadcrumbs_list'));
     }
+
     public function getBreadcrumbs()
     {
 
@@ -21,7 +22,10 @@ class SistemaController extends Controller {
             ['name' => 'Alunos', 'method' => 'GET', 'url' => route('students.index')],
             ['name' => 'Criar Aluno', 'method' => 'POST', 'url' => route('students.create')],
             ['name' => 'Editar Ficha', 'method' => 'PUT', 'url' => $studentId ? route('students.edit', ['id' => $studentId]) : '#'],
-            ['name' => 'Ficha', 'method' => 'GET', 'url' => $studentId ? route('students.show', ['id' => $studentId]) : '#']
+            ['name' => 'Ficha', 'method' => 'GET', 'url' => $studentId ? route('students.show', ['id' => $studentId]) : '#'],
+
+            ['name' => 'Categorias', 'method' => 'GET', 'url' => route('category.index')],
+            ['name' => 'Criar Categoria', 'method' => 'POST', 'url' => route('category.create')],
         ];
     }
     }

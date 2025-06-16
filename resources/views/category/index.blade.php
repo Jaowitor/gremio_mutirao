@@ -27,10 +27,7 @@
                         <h5 class="card-title mb-0">{{ $category->name_category }}</h5>
                     </div>
                     <div class="card-body">
-                        <details>
-                            <summary class="summary-title">Ler mais</summary>
-                            <p class="text-muted">{{ $category->description }}</p>
-                        </details>
+                        <p class="text-muted">{{ $category->description }}</p>
                         <p><strong>Idade:</strong> {{ $category->type_category }}</p>
                     </div>
                     <div class="card-footer text-end">
@@ -54,7 +51,18 @@
         {{ $categories->links() }}
     </div>
 </div>
+{{-- <script>
+    document.querySelectorAll('.type-category-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.type-category-btn').forEach(btn => btn.classList.remove('active', 'btn-primary'));
+            this.classList.add('active', 'btn-primary');
+            document.getElementById('selectedTypeCategory').value = this.getAttribute('data-type');
+        });
+    });
+</script> --}}
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/category/category-index.css') }}">
 @endpush
 @endsection
+
+

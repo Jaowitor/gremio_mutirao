@@ -1,3 +1,4 @@
+
 <div class="students-list">
     @forelse($students as $student)
         <div class="student-card">

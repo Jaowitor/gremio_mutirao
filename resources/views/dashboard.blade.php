@@ -19,15 +19,19 @@
                 <div>Jogadores</div>
             </div>
         </a>
-        <a href="{{ route('students.create') }}" class="modulo-link">
+        <a href="{{ route('category.index') }}" class="modulo-link">
         <div class="modulo-card">
             <i class="fas fa-futbol"></i>
-            <div>Partidas</div>
+            <div>Categorias</div>
         </div>
         </a>
         <div class="modulo-card">
             <i class="fas fa-bullhorn"></i>
             <div>Avisos</div>
+        </div>
+        <div class="modulo-card">
+            <i class="fas fa-clipboard"></i>
+            <div>Treinos</div>
         </div>
     </div>
 

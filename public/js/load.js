@@ -18,4 +18,12 @@
                     loader.style.display = 'flex';
                 });
             });
+
+            window.onpageshow = function(event) {
+				if (event.persisted) {
+                    loader.style.display = 'none';
+                    // alert('Página recarregada');
+					console.log(document.visibilityState);
+				}
+			};
         });

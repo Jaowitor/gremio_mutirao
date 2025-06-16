@@ -4,27 +4,46 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Student;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Category;
+use App\Models\CategoryStudent;
 
 class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
      */
-    public function run(): void
-    {
-        // Cria 10 usuários genéricos
-        \App\Models\User::factory(10)->create();
+public function run(): void
+{
+    User::factory(10)->create();
 
-        // Cria 20 alunos (cada um já cria um usuário vinculado)
-        Student::factory(20)->create();
+    Student::factory(20)->create();
 
-        // Usuário de teste fixo
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt('root123'),
-        ]);
+    User::factory()->create([
+        'name' => 'Test User',
+        'email' => 'test@example.com',
+        'password' => bcrypt('root123'),
+    ]);
+
+        Category::factory(10)->create();
+        $students = Student::all();
+        $categories = Category::all();
+
+        foreach ($students as $student) {
+            // Calcula idade do estudante
+            $age = now()->diffInYears($student->date_of_birth);
+
+            // Seleciona categoria que combina com a idade
+            $category = $categories->where('type_category', $age)->first();
+
+            if ($category) {
+                CategoryStudent::factory()->create([
+                    'student_id' => $student->id,
+                    'category_id' => $category->id,
+                ]);
+            }
+        }
+
     }
+
 }

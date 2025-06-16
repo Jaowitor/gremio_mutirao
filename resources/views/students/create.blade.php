@@ -11,10 +11,6 @@
     </div>
 @endif
 
-@if(old('date_of_birth'))
-    <p>data digitada: {{ old('date_of_birth') }}</p>
-@endif
-
 
 <div class="form-container-student">
     <form 

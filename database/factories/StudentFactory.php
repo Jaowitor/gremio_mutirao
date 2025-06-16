@@ -27,7 +27,7 @@ class StudentFactory extends Factory
             'medication' => $this->faker->optional()->word,
             'date_init' => $this->faker->date(),
             'date_end' => null,
-            'date_of_birth' => $this->faker->date('d-m-Y', '-10 years'),
+            'date_of_birth' => $this->faker->dateTimeBetween('-17 years', '-10 years')->format('Y-m-d'),
             'active' => $this->faker->boolean(80),
         ];
     }

@@ -1,5 +1,9 @@
 @extends('layouts.layout-dois')
-
+@section('bar')
+<div class="title text-white text-center py-3" style="width: 20%; margin-left: 120px; font-size: 24px; background: linear-gradient(90deg, #007BFF, #2684e9); font-weight: bold; border-radius: 8px;">
+    Criar Categoria
+</div>
+@endsection
 @section('content')
 <div class="container mt-4" style="width: 100%; height: 100; display: flex; align-items: center; justify-content: center;">
     <div class="card shadow-sm border-0" style="background-color: #f8f9fa; width: 100%; height: 100%; ">
@@ -44,4 +48,31 @@
         </div>
     </div>
 </div>
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.type-category-btn');
+        const hiddenInput = document.getElementById('selectedTypeCategory');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                // Remove 'active' de todos os botões
+                buttons.forEach(btn => btn.classList.remove('active'));
+                // Adiciona 'active' ao botão clicado
+                this.classList.add('active');
+                hiddenInput.value = this.dataset.type;
+            });
+        });
+    });
+</script>
+@endpush
+@push('styles')
+<style>
+    .type-category-btn.active {
+        background-color: #0d6efd;
+        color: white;
+        border-color: #0d6efd;
+    }
+</style>    
+@endpush
 @endsection

@@ -17,8 +17,8 @@
             </div>
         </div>
     @empty
-        <div style="text-align:center; color:#888; margin-top:32px;">
-            Nenhum aluno encontrado.
-        </div>
+            <div class="text-center p-5 bg-light rounded">
+                <p class="text-muted mb-0">Nenhum aluno encontrado.</p>
+            </div>
     @endforelse
 </div>

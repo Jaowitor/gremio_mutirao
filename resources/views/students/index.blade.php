@@ -1,60 +1,60 @@
+
 @extends('layouts.layout-dois')
-
 @section('bar')
-<div class="title text-white text-center py-3" style="font-size: 24px; background: linear-gradient(90deg, #007BFF, #00BFFF); font-weight: bold; border-radius: 8px; box-shadow: 2px 2px 8px rgba(0,0,0,0.1);">
-    Categorias
-</div>
+<div class="bar-content-wrapper">
 
-<div class="container mt-3">
-    <div class="d-flex justify-content-between">
-        <div>
-            <input type="text" class="form-control" placeholder="Pesquisar categoria..." id="search">
+    <div class="bar-title">
+        Alunos
+    </div>
+    
+    <div class="bar-search-container">
+        <div class="bar-search-wrapper">
+            <form method="GET" class="search-form" data-search-url="{{ route('students.index') }}">
+                <input type="text" name="q" id="search-input" placeholder="Pesquisar aluno..." value="{{ request('q') }}">
+            </form>
         </div>
-        <a href="{{ route('category.create') }}" class="btn btn-success">
-            <i class="fas fa-plus-circle"></i> Nova Categoria
+
+        <a href="{{ route('students.create') }}" class="btn btn-success bar-action-button">
+            <i class="fas fa-user-plus"></i> Novo Aluno
         </a>
     </div>
 </div>
+
 @endsection
 
+
 @section('content')
-<div class="container mt-4">
-    <div class="row">
-        @foreach($categories as $category)
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="card-title mb-0">{{ $category->name_category }}</h5>
-                    </div>
-                    <div class="card-body">
-                        <details>
-                            <summary class="summary-title">Ler mais</summary>
-                            <p class="text-muted">{{ $category->description }}</p>
-                        </details>
-                        <p><strong>Idade:</strong> {{ $category->type_category }}</p>
-                    </div>
-                    <div class="card-footer text-end">
-                        <a href="{{ route('category.edit', $category->id) }}" class="btn btn-warning btn-sm">
-                            <i class="fas fa-edit"></i> Editar
-                        </a>
-                        <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="fas fa-trash"></i> Excluir
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        @endforeach
+<div class="students-container" style="flex: 1; margin-left: auto; margin-right: auto; height: 100vh; background: white; justify-content: flex-start; box-shadow: none; display: flex; flex-direction: column;">
+    {{-- Listagem de alunos --}}
+    <div class="students-list">
+        @include('students.partials.list', ['students' => $students])
     </div>
-    
-    <div class="mt-3 d-flex justify-content-center">
-        {{ $categories->links() }}
+
+    {{-- Paginação --}}
+    <div class="pagination-container">
+        @if ($students->lastPage() > 1)
+            <ul class="pagination">
+                @if ($students->currentPage() > 1)
+                    <li class="nav-button">
+                        <a href="{{ $students->previousPageUrl() }}">← Anterior</a>
+                    </li>
+                @endif
+
+                @for ($i = 1; $i <= $students->lastPage(); $i++)
+                    <li class="page-number {{ $students->currentPage() == $i ? 'active' : '' }}">
+                        <a href="{{ $students->url($i) }}">{{ $i }}</a>
+                    </li>
+                @endfor
+
+                @if ($students->currentPage() < $students->lastPage())
+                    <li class="nav-button">
+                        <a href="{{ $students->nextPageUrl() }}">Próximo →</a>
+                    </li>
+                @endif
+            </ul>
+        @endif
     </div>
-</div>
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/category/category-index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/students-index.css') }}">
 @endpush
 @endsection

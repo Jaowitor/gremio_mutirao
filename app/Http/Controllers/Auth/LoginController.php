@@ -22,12 +22,14 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            // Adiciona uma mensagem de sucesso para o Toast
+            return redirect()->intended('/dashboard')->with('success', 'Login realizado com sucesso!');
         }
 
+        // Adiciona uma mensagem de erro para o Toast, além de manter os erros de validação
         return back()->withErrors([
             'email' => 'E-mail ou senha inválidos.',
-        ])->withInput();
+        ])->withInput()->with('error', 'Falha no login. Verifique suas credenciais.');
     }
 
     public function logout(Request $request)
@@ -35,6 +37,7 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/auth/login');
+        // Adiciona uma mensagem de sucesso para o Toast após o logout
+        return redirect('/auth/login')->with('success', 'Você foi desconectado com sucesso!');
     }
 }

@@ -4,7 +4,6 @@
 <div class="container-show-student" style="border: 1px solid red; display:flex;">
 
     <div class="photo-student" style="flex:1; display: flex; align-items: flex-start; height: auto; border: 1px solid black; box-sizing: border-box;">
-        {{-- <img src="https://randomuser.me/api/portraits/men/31.jpg" alt="Foto do Aluno" style="display: block; width: 80%; height: auto;"> --}}
     </div>
 
         <div class="info-student" style="flex:1; padding: 30px;">

@@ -18,7 +18,7 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(), // Cria um usuário junto
+            'user_id' => User::factory(),
             'nationality' => $this->faker->country,
             'position' => $this->faker->randomElement(['Atacante', 'Meio-campo', 'Defensor', 'Goleiro']),
             'laterality' => $this->faker->randomElement(['Destro', 'Canhoto']),

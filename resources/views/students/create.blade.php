@@ -1,156 +1,121 @@
 @extends('layouts.layout-dois')
-@section('content')
 
-@if ($errors->any())
-    <div>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+@section('bar')
+    <div class="bar-title" style="font-size: 24px; font-weight: bold;">
+        {{ isset($student) ? 'Editar Aluno' : 'Novo Aluno' }}
     </div>
-@endif
+@endsection
 
-
-<div class="form-container-student">
-    <form 
-        action="{{ isset($student) ? route('students.update', $student->id) : route('students.store') }}" 
-        method="POST" 
-        id="studentForm"
-    >
-        @csrf
-        @if(isset($student))
-            @method('PUT')
-        @endif
-
-        <div class="form-header">
-            <h4>Ficha Técnica</h4>
-            <div class="form-buttons">
-                <button type="submit" class="btn-submit">Salvar</button>
-            </div>
+@section('content')
+<div class="container-fluid">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">
+                <i class="fas fa-user-edit me-2"></i>
+                Ficha Técnica
+            </h4>
         </div>
 
-        <div class="form-group-student">
-            <label for="user_name">Nome</label>
-            <input 
-                type="text" 
-                id="user_name" 
-                name="user_name" 
-                value="{{ old('user_name', isset($student) ? $student->user->name : '') }}" 
-                required
+        <div class="card-body p-4">
+            <form 
+                action="{{ isset($student) ? route('students.update', $student->id) : route('students.store') }}" 
+                method="POST" 
+                id="studentForm"
             >
+                @csrf
+                @if(isset($student))
+                    @method('PUT')
+                @endif
+                <h5 class="mb-3 text-secondary">Dados Pessoais</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="user_name" class="form-label">Nome Completo</label>
+                        <input type="text" class="form-control" id="user_name" name="user_name" value="{{ old('user_name', $student->user->name ?? '') }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="user_email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="user_email" name="user_email" value="{{ old('user_email', $student->user->email ?? '') }}" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="date_of_birth" class="form-label">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth', isset($student) ? $student->date_of_birth->format('Y-m-d') : '') }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="nationality" class="form-label">Naturalidade</label>
+                        <select class="form-select" name="nationality" id="nationality" required>
+                            <option value="" selected disabled>Selecione...</option>
+                            @foreach($countries as $nat)
+                                <option value="{{ $nat }}" {{ old('nationality', $student->countries ?? '') == $nat ? 'selected' : '' }}>
+                                    {{ $nat }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+                <h5 class="mb-3 text-secondary">Dados Físicos e Técnicos</h5>
+                <div class="row">
+                <div class="col-md-6 col-lg-3 mb-3">
+                    <label for="position" class="form-label">Posição</label>
+                    <select class="form-select" name="position" id="position-select" required>
+                        <option value="" selected disabled>Selecione...</option>
+                        @foreach($positions as $pos)
+                            <option value="{{ $pos }}" {{ old('position', $student->position ?? '') == $pos ? 'selected' : '' }}>
+                                {{ $pos }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <label for="lateralidades" class="form-label">Lateralidade</label>
+                        <select class="form-select" name="lateralidades" id="lateralidades" required>
+                            <option value="" selected disabled>Selecione...</option>
+                            @foreach($lateralidades as $lat)
+                                <option value="{{ $lat }}" {{ old('lateralidades', $student->lateralidades ?? '') == $lat ? 'selected' : '' }}>
+                                    {{ $lat }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <label for="height" class="form-label">Altura (m)</label>
+                        <input type="number" step="0.01" class="form-control" id="height" name="height" value="{{ old('height', $student->height ?? '') }}">
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <label for="weight" class="form-label">Peso (kg)</label>
+                        <input type="number" step="0.01" class="form-control" id="weight" name="weight" value="{{ old('weight', $student->weight ?? '') }}">
+                    </div>
+                </div>
+                <hr class="my-4">
+                <h5 class="mb-3 text-secondary">Informações Adicionais</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="medication" class="form-label">Usa medicação? Qual?</label>
+                        <input type="text" class="form-control" id="medication" name="medication" value="{{ old('medication', $student->medication ?? '') }}" placeholder="Nenhuma ou descreva a medicação">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="date_end" class="form-label">Data de Fim(Opcional)</label>
+                        <input type="date" class="form-control" id="date_end" name="date_end" value="{{ old('date_end', isset($student) && $student->date_end ? $student->date_end->format('Y-m-d') : '') }}">
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-save me-2"></i>
+                        {{ isset($student) ? 'Atualizar Aluno' : 'Salvar Novo Aluno' }}
+                    </button>
+                </div>
+            </form>
         </div>
-
-        <div class="form-group-student">
-            <label for="user_email">Email</label>
-            <input 
-                type="email" 
-                id="user_email" 
-                name="user_email" 
-                value="{{ old('user_email', isset($student) ? $student->user->email : '') }}" 
-                required
-            >
-        </div>
-
-        <div class="form-row">
-            <div class="form-group-student">
-                <label for="nationality">Naturalidade</label>
-                <select name="nationality" id="nationality" required>
-                    <option value="">Selecione</option>
-                    @foreach($countries as $nat)
-                        <option value="{{ $nat }}" {{ old('nationality', isset($student) ? $student->countries : '') == $nat ? 'selected' : '' }}>
-                            {{ $nat }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group-student">
-                <label for="position">Posição</label>
-                <select name="position" id="position" required>
-                    <option value="">Selecione</option>
-                    @foreach($positions as $pos)
-                        <option value="{{ $pos }}" {{ old('position', isset($student) ? $student->position : '') == $pos ? 'selected' : '' }}>
-                            {{ $pos }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group-student">
-                <label for="height">Altura (m)</label>
-                <input 
-                    type="number" 
-                    step="0.01" 
-                    id="height" 
-                    name="height" 
-                    value="{{ old('height', isset($student) ? $student->height : '') }}"
-                >
-            </div>
-
-            <div class="form-group-student">
-                <label for="weight">Peso (kg)</label>
-                <input 
-                    type="number" 
-                    step="0.01" 
-                    id="weight" 
-                    name="weight" 
-                    value="{{ old('weight', isset($student) ? $student->weight : '') }}"
-                >
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group-student">
-                <label for="lateralidades">Lateralidade</label>
-                <select name="lateralidades" id="lateralidades" required>
-                    <option value="">Selecione</option>
-                    @foreach($lateralidades as $lat)    
-                        <option value="{{ $lat }}" {{ old('lateralidades', isset($student) ? $student->lateralidades : '') == $lat ? 'selected' : '' }}>
-                            {{ $lat }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group-student">
-                <label for="date_of_birth">Data de Nascimento</label>
-                <input 
-                    type="date" 
-                    id="date_of_birth" 
-                    name="date_of_birth" 
-                    value="{{ old('date_of_birth', isset($student) ? $student->date_of_birth->format('d-m-Y') : '') }}"
-                    aria-errormessage="date_of_birth-error"
-                    title="Data de Nascimento"
-                    language="pt-BR"
-                    required
-                >
-            </div>
-            <div class="form-group-student">
-                <label for="date_end">Data de Fim</label>
-                <input 
-                    type="date" 
-                    id="date_end" 
-                    name="date_end" 
-                    value="{{ old('date_end', isset($student) && $student->date_end ? $student->date_end->format('d-m-Y') : '') }}"
-                >
-            </div>
-        </div>
-
-        <div class="form-group-student">
-            <label for="medication">Medicação</label>
-            <input 
-                type="text" 
-                id="medication" 
-                name="medication" 
-                value="{{ old('medication', isset($student) ? $student->medication : '') }}"
-            >
-        </div>
-
-    </form>
+    </div>
 </div>
+@endsection
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/student-form.css') }}">
 @endpush
-@endsection
+

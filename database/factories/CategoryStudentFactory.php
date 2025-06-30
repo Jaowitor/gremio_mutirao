@@ -10,20 +10,9 @@ class CategoryStudentFactory extends Factory
 {
     public function definition(): array
     {
-        
-        $student = Student::inRandomOrder()->first();
-
-        $age = now()->diffInYears($student->date_of_birth);
-
-        $category = Category::where('type_category', $age)->first();
-
-        if (!$category) {
-            $category = Category::inRandomOrder()->first();
-        }
-
         return [
-            'student_id' => $student->id,
-            'category_id' => $category->id,
+            'category_id' => Category::factory(),
+            'student_id' => Student::factory(),
         ];
     }
 }

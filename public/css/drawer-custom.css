@@ -1,119 +1,176 @@
-/* Definição de variáveis CSS */
 :root {
     --primary-color: #007BFF;
     --secondary-color: white;
     --tertiary-color: gray;
     --text-color: #333;
+    --drawer-width: 240px;
+}
+
+
+.bar,
+.content-wrapper {
+    margin-left: var(--drawer-width);
+    width: calc(100% - var(--drawer-width));
+    transition: all 0.3s;
 }
 
 /* Breadcrumb */
+/* Container principal dos breadcrumbs */
 .breadcrumbs-container {
-    height: 100%;
+    padding: 15px 20px; /* Ajuste no padding */
+    background: 
+    linear-gradient(to top, white, transparent 80%),var(--primary-color);
     display: flex;
     align-items: center;
-    padding: 20px;
-    background: var(--secondary-color);
-}
-
-.breadcrumb-wrapper {
     width: 100%;
 }
 
-.breadcrumb a {
-    color: var(--primary-color);
-    margin: 0 5px;
+/* Lista ordenada que contém os breadcrumbs */
+.breadcrumb-geo {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.breadcrumb span {
-    font-weight: bold;
+.breadcrumb-geo li a {
+    display: block;
+    padding: 10px 15px 10px 30px;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.15);
+    color: var(--secondary-color);
+    font-weight: 500;
+    position: relative;
+    transition: background-color 0.3s;
+    clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%, 10% 50%);
 }
 
+.breadcrumb-geo li:first-child a {
+    padding-left: 15px;
+    clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
+}
+
+.breadcrumb-geo li a:hover {
+    background-color: rgba(15, 15, 15, 0.3);
+}
+
+/* Estilo para o item ativo (a página atual) */
+.breadcrumb-geo li.active a {
+    background-color: rgba(255, 255, 255, 0.2);
+    pointer-events: none; /* Desativa o clique no item ativo */
+    /* Recorte diferente para o último item ter um final reto */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 10% 50%);
+}
+/* --- Estilização do Drawer --- */
 .drawer {
-    width: 200px;
+    width: var(--drawer-width); 
     background-color: var(--primary-color);
     color: #fff;
     height: 100vh;
-    padding: 32px 20px 0;
+    padding: 20px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: all 0.3s;
 }
 
+.drawer h5 {
+    text-align: start;
+    margin: 0 20px 15px;
+}
+
+.drawer-divider {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-bottom: 10px;
+}
 /* Estilos dos links dentro do Drawer */
 .drawer-link {
     display: flex;
+    margin: 10px 0;
+    width: 100%;
     align-items: center;
-    padding: 12px 16px;
-    color: #fff !important;
-    text-decoration: none;
-    border-radius: 2px;
-    
-    font-weight: 500;
-    border-radius: 8px;
-    transition: background 0.3s, color 0.3s;
 }
 
-/* Links no Drawer */
 .drawer a,
 .drawer a:link,
 .drawer a:visited,
 .drawer a:hover,
-.drawer a:active {
+.drawer a:active { 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px;
     color: #fff !important;
     text-decoration: none !important;
+    background-color: transparent;
 }
 
-/* Efeito Hover */
-.drawer-link:hover {
+.drawer-logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100% !important;
+    padding: 12px;
+    color: var(--secondary-color) !important;
+    text-decoration: none !important;
+    text-align: left;
+    background-color: var(--primary-color);
+    border: none;
+    cursor: pointer;
+}
+.drawer-link form {
+    width: 100%;
+    display: flex;
+}
+.drawer-link a:hover,
+.drawer-logout-btn:hover {
     background-color: rgba(255, 255, 255, 0.2);
-    color: #f1f1f1;
-}
-
-/* Efeito ao clicar */
-.drawer-link:active {
-    background-color: rgba(255, 255, 255, 0.4);
-    color: #fff;
+    color:#043161!important;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
 }
 
 /* Estado selecionado */
 .drawer-link.selected {
     background-color: rgba(255, 255, 255, 0.3);
-    color: #fff;
     font-weight: bold;
+    
 }
 
-/* Botão de Logout */
-.drawer-logout-btn {
-    color: #fff !important;
-    background: transparent;
-    border: none;
-    text-align: left;
-    padding: 12px 16px;
-    font-weight: 400;
-    width: 100%;
-    cursor: pointer;
-}
+/* --- Media Query para Telas Pequenas (Responsividade) --- */
+@media (max-width: 768px) {
+    .form-container-student {
+        padding: 15px;
+        box-shadow: none; /* Remove a sombra em telas pequenas */
+        border-radius: 0;
+    }
+    
+    /* Faz as linhas de campos ficarem verticais (empilhadas) */
+    .form-row {
+        flex-direction: column;
+        gap: 0; /* O espaçamento já é dado pelo margin-bottom do .form-group-student */
+    }
 
-.skeleton {
-    background-color: #e0e0e0;
-    color: transparent; /* some o texto */
-    position: relative;
-    overflow: hidden;
-}
+    /* Ajusta o cabeçalho para telas pequenas */
+    .form-header {
+        flex-direction: column;
+        align-items: stretch; /* Estica os itens para ocupar 100% da largura */
+        gap: 15px;
+    }
 
-.skeleton::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -150px;
-    height: 100%;
-    width: 150px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-    animation: shimmer 1.2s infinite;
-}
+    .form-header h4 {
+        text-align: center; /* Centraliza o título */
+    }
 
-@keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-}
-
-/* Classe geral para aplicar efeito skeleton */
-.loading * {
-    pointer-events: none;      /* impede clicar durante o carregamento */
+    .form-buttons .btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
 }

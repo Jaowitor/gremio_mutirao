@@ -1,17 +1,20 @@
 @extends('layouts.layout-dois')
 
 @section('bar')
-<div class="title text-white text-center py-3" style="font-size: 24px; background: linear-gradient(90deg, #007BFF, #00BFFF); font-weight: bold; border-radius: 8px; box-shadow: 2px 2px 8px rgba(0,0,0,0.1);">
-    Categorias
-</div>
-
-<div class="container mt-3">
-    <div class="d-flex justify-content-between">
-        <div>
-            <input type="text" class="form-control" placeholder="Pesquisar categoria..." id="search">
+<div class="bar-content-wrapper">
+    <div class="bar-title">
+        Turmas
+    </div>
+    
+    <div class="bar-search-container">
+        <div class="bar-search-wrapper">
+            <form method="GET" class="search-form" data-search-url="{{ route('students.index') }}">
+                <input type="text" name="q" id="search-input" placeholder="Pesquisar aluno..." value="{{ request('q') }}">
+            </form>
         </div>
-        <a href="{{ route('category.create') }}" class="btn btn-success">
-            <i class="fas fa-plus-circle"></i> Nova Categoria
+
+        <a href="{{ route('category.create') }}" class="btn btn-success bar-action-button">
+            <i class="fas fa-user-plus"></i> Nova Turma
         </a>
     </div>
 </div>
@@ -20,7 +23,7 @@
 @section('content')
 <div class="container mt-4">
     <div class="row">
-        @foreach($categories as $category)
+        @forelse($categories as $category)
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-header bg-primary text-white">
@@ -30,36 +33,36 @@
                         <p class="text-muted">{{ $category->description }}</p>
                         <p><strong>Idade:</strong> {{ $category->type_category }}</p>
                     </div>
-                    <div class="card-footer text-end">
-                        <a href="{{ route('category.edit', $category->id) }}" class="btn btn-warning btn-sm">
+                    <div class="card-footer text-center" style="background-color: #f8f9fa; border-top: 1px solid #dee2e6; display: flex;">
+                        <a href="{{ route('category.show', $category->id) }}" class="btn btn-outline-primary btn-sm" style="flex: 1; margin-right: 5px;">
+                            <i class="fas fa-edit"></i> alunos
+                        </a>
+
+                        <a href="{{ route('category.edit', $category->id) }}" class="btn btn-warning btn-sm" style="flex: 1; margin-left: 5px;">
                             <i class="fas fa-edit"></i> Editar
                         </a>
                         <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">
+                            <button type="submit" class="btn btn-outline-danger btn-sm" style="flex: 1; margin-left: 5px;" onclick="return confirm('Tem certeza que deseja excluir esta turma?')">
                                 <i class="fas fa-trash"></i> Excluir
                             </button>
                         </form>
                     </div>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <div class="text-center p-5 bg-light rounded">
+                <p class="text-muted mb-0">Nenhuma turma encontrado.</p>
+            </div>
+        @endforelse
     </div>
     
     <div class="mt-3 d-flex justify-content-center">
         {{ $categories->links() }}
     </div>
 </div>
-{{-- <script>
-    document.querySelectorAll('.type-category-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            document.querySelectorAll('.type-category-btn').forEach(btn => btn.classList.remove('active', 'btn-primary'));
-            this.classList.add('active', 'btn-primary');
-            document.getElementById('selectedTypeCategory').value = this.getAttribute('data-type');
-        });
-    });
-</script> --}}
+
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/category/category-index.css') }}">
 @endpush

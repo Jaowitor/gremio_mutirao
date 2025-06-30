@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Category;
+use App\Models\Student;
 use App\Http\Controllers\SistemaController;
-use App\Models\CategoryStudent;
+
 
 class CategoryController extends Controller
 {
@@ -26,7 +28,6 @@ class CategoryController extends Controller
     {
         $breadcrumbs_list = (new SistemaController())->getBreadcrumbs();
         
-        // dd($this->types_category);
 
         return view('category.create', [
             'breadcrumbs_list' => $breadcrumbs_list,
@@ -40,7 +41,7 @@ class CategoryController extends Controller
         $request->validate([
             'name_category' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'type_category' => 'required|in:' . implode(',', $this->types_category), // Usa a propriedade
+            'type_category' => 'required|in:' . implode(',', $this->types_category),
         ]);
 
         Category::create($request->all());
@@ -56,7 +57,7 @@ class CategoryController extends Controller
         return view('category.create', [
             'category' => $category,
             'breadcrumbs_list' => $breadcrumbs_list,
-            'types_category' => $this->types_category // Usa a propriedade global
+            'types_category' => $this->types_category
         ]);
     }
 
@@ -83,11 +84,51 @@ class CategoryController extends Controller
     }
 
     public function show($id) {
-        $category = CategoryStudent::with('category')->findOrFail($id);
         $breadcrumbsController = new SistemaController();
         $breadcrumbs_list = $breadcrumbsController->getBreadcrumbs();
+        
+        $category = Category::findOrFail($id);
 
+        // Busca todos os students associados à categoria via a tabela pivot
+        $students = Student::whereHas('categories', function ($query) use ($id) {
+            $query->where('category_id', $id);
+        })->with('user')->get()->sortBy(function ($student) {
+            return $student->user->name ?? '';
+        })->values();
 
-        // return view('category.show', compact('student', 'breadcrumbs_list'));
+        return view('category.show', compact('category', 'breadcrumbs_list', 'students'));
     }
+
+    public function addStudentIndex(Category $category)
+    {
+        $breadcrumbs_list = (new SistemaController())->getBreadcrumbs();
+
+        // IDs dos alunos que JÁ ESTÃO na turma.
+        $existingStudentIds = $category->students()->pluck('students.id')->all();
+
+        $students = Student::with('user')
+                        ->whereNotIn('id', $existingStudentIds)
+                        ->get()
+                        ->sortBy(fn($s) => $s->user->name)
+                        ->values();
+
+        return view('category.add_student', 
+                    compact('breadcrumbs_list', 'students', 'category'));
+    }
+
+    public function addStudentStore(Request $request, Category $category)
+    {
+        $request->validate([
+            'student_ids'   => 'required|array',
+            'student_ids.*' => 'exists:students,id',
+        ]);
+
+        $category->students()
+                ->syncWithoutDetaching($request->student_ids);
+
+        return redirect()
+            ->route('category.show', $category->id)
+            ->with('success','Alunos adicionados com sucesso!');
+    }
+
 }

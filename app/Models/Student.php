@@ -24,8 +24,28 @@ class Student extends Model
         'date_end' => 'date',
     ];
 
+    /**
+     * Um estudante pertence a um usuário.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Um estudante pertence a muitas categorias através da tabela pivô `category_students`.
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_students', 'student_id', 'category_id');
+    }
+
+    /**
+     * Um estudante tem muitos registros CategoryStudent.
+     * Isso permite acessar diretamente os registros da tabela `category_students` que pertencem a este estudante.
+     */
+    public function categoryStudents()
+    {
+        return $this->hasMany(CategoryStudent::class, 'student_id', 'id');
     }
 }

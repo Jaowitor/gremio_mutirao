@@ -9,16 +9,32 @@ class CategoryStudent extends Model
 {
     use HasFactory;
 
+    protected $table = 'category_students';
+
+    // A coluna 'id' desta tabela é o 'categorystudent_id' mencionado em TrainingFrequecy
     protected $fillable = ['student_id', 'category_id'];
 
-    public function students()
+    /**
+     * Cada registro `category_student` pertence a um estudante.
+     */
+    public function student()
     {
-        return $this->belongsToMany(Student::class, 'category_student');
+        return $this->belongsTo(Student::class, 'student_id');
     }
 
-    public function categories()
+    /**
+     * Cada registro `category_student` pertence a uma categoria.
+     */
+    public function category()
     {
-        return $this->belongsToMany(Category::class, 'category_student');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
+    /**
+     * Um registro `CategoryStudent` pode ter muitos registros de frequência de treino associados.
+     */
+    public function trainingFrequecies()
+    {
+        return $this->hasMany(TrainingFrequecy::class, 'categorystudent_id', 'id');
+    }
 }
